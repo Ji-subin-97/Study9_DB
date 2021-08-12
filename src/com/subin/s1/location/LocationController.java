@@ -38,7 +38,9 @@ public class LocationController {
 			System.out.println("원하는 작업 입력");
 			System.out.println("1. 전체 정보 출력");
 			System.out.println("2. 한개 정보 출력");
-			System.out.println("3. 나 가 기");
+			System.out.println("3. 지역 정보 추가");
+			System.out.println("4. 지역 정보 삭제");
+			System.out.println("5. 나 가 기");
 			int select = sc.nextInt();
 			
 			switch (select) {
@@ -59,6 +61,12 @@ public class LocationController {
 				}else {
 					locationView.view("없는 ID 입니다.");
 				}
+				break;
+			case 3:
+				locationDAO.addInfo();
+				break;
+			case 4:
+				locationDAO.delInfo();
 				break;
 			default :
 				flag = false;

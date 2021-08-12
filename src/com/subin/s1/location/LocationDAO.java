@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.subin.s1.util.DBConnect;
 
@@ -176,5 +177,88 @@ public class LocationDAO {
 		
 		return ar;
 		
+	}
+	
+	// addInfo
+	public void addInfo() {
+		
+		Connection con = null;
+		PreparedStatement st = null;
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			con = dbConnect.getConnect();
+			
+			LocationInput locationInput = new LocationInput();
+			LocationDTO locationDTO = locationInput.inputInfo(sc);
+			
+			String sql = "INSERT INTO locations VALUES (?,?,?,?,?,?)";
+			st = con.prepareStatement(sql);
+			st.setInt(1, locationDTO.getLocation_id());
+			st.setString(2, locationDTO.getStreet_address());
+			st.setString(3, locationDTO.getPostal_code());
+			st.setString(4, locationDTO.getCity());
+			st.setString(5, locationDTO.getState_province());
+			st.setString(6, locationDTO.getCountry_id());
+			
+			int result = st.executeUpdate();
+			LocationView locationView = new LocationView();
+					
+			if(result>0) {
+				locationView.view("성공");
+			}else {
+				locationView.view("실패");
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	// delInfo
+	public void delInfo() {
+		
+		Connection con = null;
+		PreparedStatement st = null;
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			LocationInput locationInput = new LocationInput();
+			LocationDTO locationDTO = locationInput.delInfo(sc);
+			con = dbConnect.getConnect();
+			
+			String sql = "DELETE locations WHERE LOCATION_ID = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1, locationDTO.getLocation_id());
+			
+			int result = st.executeUpdate();
+			LocationView locationView = new LocationView();
+			
+			if(result>0) {
+				locationView.view("성공");
+			}else {
+				locationView.view("실패");
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
