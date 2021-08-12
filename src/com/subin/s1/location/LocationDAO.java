@@ -87,12 +87,11 @@ public class LocationDAO {
 	}
 	
 	//Location Table에서 id와 일치하는 정보를 조회
-	public LocationDTO getOne(int location_id) {
+	public LocationDTO getOne(LocationDTO locationDTO) {
 		
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		LocationDTO locationDTO = null;
 		
 		try {
 			con = dbConnect.getConnect();
@@ -100,7 +99,7 @@ public class LocationDAO {
 			String sql = "SELECT * FROM locations WHERE LOCATION_ID = ?";
 			
 			st = con.prepareStatement(sql);
-			st.setString(1, "1000");
+			st.setInt(1, locationDTO.getLocation_id());
 			
 			rs = st.executeQuery();
 			

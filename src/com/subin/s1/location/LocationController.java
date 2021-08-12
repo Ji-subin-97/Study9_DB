@@ -27,8 +27,9 @@ public class LocationController {
 //		ArrayList<LocationDTO> ar = locationDAO.getSearch("-");
 //		locationView.view(ar);
 		
-		int count = locationDAO.getCount();
-		locationView.view(count);
+		locationDTO.setLocation_id(1);
+		locationDTO = locationDAO.getOne(locationDTO);
+		locationView.view(locationDTO);
 		
 	}
 }
