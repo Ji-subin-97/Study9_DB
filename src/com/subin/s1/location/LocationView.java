@@ -12,6 +12,10 @@ public class LocationView {
 		locationDTO = new LocationDTO();
 	}
 	
+	public void view(String msg) {
+		System.out.println(msg);
+	}
+	
 	public void view(int count) {
 		System.out.println("Count : " + count);
 	}

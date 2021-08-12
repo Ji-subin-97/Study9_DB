@@ -92,6 +92,7 @@ public class LocationDAO {
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		LocationDTO result = null;
 		
 		try {
 			con = dbConnect.getConnect();
@@ -104,13 +105,13 @@ public class LocationDAO {
 			rs = st.executeQuery();
 			
 			if(rs.next()) {
-				locationDTO = new LocationDTO();
-				locationDTO.setLocation_id(rs.getInt("LOCATION_ID"));
-				locationDTO.setStreet_address(rs.getString("STREET_ADDRESS"));
-				locationDTO.setPostal_code(rs.getString("POSTAL_CODE"));
-				locationDTO.setCity(rs.getString("CITY"));
-				locationDTO.setState_province(rs.getString("STATE_PROVINCE"));
-				locationDTO.setCountry_id(rs.getString("COUNTRY_ID"));
+				result = new LocationDTO();
+				result.setLocation_id(rs.getInt("LOCATION_ID"));
+				result.setStreet_address(rs.getString("STREET_ADDRESS"));
+				result.setPostal_code(rs.getString("POSTAL_CODE"));
+				result.setCity(rs.getString("CITY"));
+				result.setState_province(rs.getString("STATE_PROVINCE"));
+				result.setCountry_id(rs.getString("COUNTRY_ID"));
 			}
 			
 		} catch (Exception e) {
@@ -128,7 +129,7 @@ public class LocationDAO {
 			
 		}
 		
-		return locationDTO;
+		return result;
 	}
 	
 	// location 전체 정보
@@ -143,7 +144,7 @@ public class LocationDAO {
 			con = dbConnect.getConnect();
 			System.out.println("접속 성공");
 			
-			String sql = "SELECT * FROM locations";
+			String sql = "SELECT * FROM locations ORDER BY location_id ASC";
 			
 			st = con.prepareStatement(sql);
 			
